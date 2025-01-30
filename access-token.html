@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Processing OAuth</title>
+    <script>
+        (async function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const code = urlParams.get('code');
+            const resultContainer = document.getElementById("result");
+            
+            if (code) {
+                const requestBody = new URLSearchParams();
+                requestBody.append('grant_type', 'authorization_code');
+                requestBody.append('client_id', '129053');
+                requestBody.append('client_secret', '2uWL2kAtX322Qja0LuBgTH6m5y12LTSX3s647p4ohXb56x0IfmCET7862wW55UrQF7RAhU8do42jmT78');
+                requestBody.append('code', code);
+                requestBody.append('redirect_uri', 'https://gyu-0208x.github.io/oauth/cm/');
+                
+                try {
+                    const response = await fetch('https://api.createsend.com/oauth/token', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+                        body: requestBody
+                    });
+                    
+                    const result = await response.json();
+                    console.log(result);
+                    resultContainer.textContent = JSON.stringify(result, null, 2);
+                } catch (error) {
+                    console.error('Error:', error);
+                    resultContainer.textContent = 'Error: ' + error.message;
+                }
+            } else {
+                console.error('No code parameter found in URL');
+                resultContainer.textContent = 'No code parameter found in URL';
+            }
+        })();
+    </script>
+</head>
+<body>
+    <p>Processing your request...</p>
+    <pre id="result"></pre>
+</body>
+</html>
