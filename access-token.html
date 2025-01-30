@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Processing OAuth</title>
     <script>
-        (async function() {
+        window.onload = async function() {
             const urlParams = new URLSearchParams(window.location.search);
             const code = urlParams.get('code');
             const resultContainer = document.getElementById("result");
@@ -38,7 +38,7 @@
                 console.error('No code parameter found in URL');
                 resultContainer.textContent = 'No code parameter found in URL';
             }
-        })();
+        };
     </script>
 </head>
 <body>
