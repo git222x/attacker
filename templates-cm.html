@@ -1,15 +1,83 @@
-// Function to get the value of a query parameter by name
-function getParameterByName(name) {
-    const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get(name);
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Parameter Extractor</title>
+    <style>
+        /* Simple styles for the popup */
+        #popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            border: 2px solid black;
+            padding: 20px;
+            max-width: 90%;
+            max-height: 80%;
+            overflow: auto;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+        #popup-content {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-family: monospace;
+            font-size: 14px;
+        }
+        #popup-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Code Parameter Extractor</h1>
+    <button onclick="extractCodeFromURL()">Show Code</button>
 
-// Extract the 'code' parameter from the URL
-const code = getParameterByName('code');
+    <div id="popup-overlay"></div>
+    <div id="popup">
+        <h3>Extracted Code</h3>
+        <pre id="popup-content"></pre>
+        <button onclick="closePopup()">Close</button>
+    </div>
 
-// Display the value of 'code' in a popup
-if (code) {
-    alert('The value of the code parameter is: ' + code);
-} else {
-    alert('No code parameter found in the URL.');
-}
+    <script>
+        function extractCodeFromURL() {
+            // Extract the "code" parameter from the URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const code = urlParams.get('code'); // Get the 'code' parameter
+
+            if (code) {
+                // Show the code in the popup if it exists
+                showPopup(code);
+            } else {
+                alert('No code parameter found in the URL.');
+            }
+        }
+
+        function showPopup(content) {
+            document.getElementById('popup-content').textContent = content;
+            document.getElementById('popup').style.display = 'block';
+            document.getElementById('popup-overlay').style.display = 'block';
+        }
+
+        function closePopup() {
+            document.getElementById('popup').style.display = 'none';
+            document.getElementById('popup-overlay').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
