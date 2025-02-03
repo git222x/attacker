@@ -1,0 +1,15 @@
+// Function to get the value of a query parameter by name
+function getParameterByName(name) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(name);
+}
+
+// Extract the 'code' parameter from the URL
+const code = getParameterByName('code');
+
+// Display the value of 'code' in a popup
+if (code) {
+    alert('The value of the code parameter is: ' + code);
+} else {
+    alert('No code parameter found in the URL.');
+}
